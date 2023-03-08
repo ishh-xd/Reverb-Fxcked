@@ -1,0 +1,1 @@
+{"version":2,"languages":{"nodejs-npm":{"specfileHash":"59007004fe17a77ac1c241a612bb051d","lockfileHash":"0e3c3964f17bc063df7ef146cacd0e4b","guessedImports":["undici","kazagumo","@top-gg/sdk","kazagumo-spotify","mongoose","discord-hybrid-sharding","signale","axios","discord.js","lodash","shoukaku"],"guessedImportsHash":"e7447e86bc41038e821dec5322e0f20e"}}}
