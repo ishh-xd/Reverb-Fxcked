@@ -170,7 +170,7 @@ module.exports = class botClient extends Client {
                 cmd.file = f;
                 cmd.fileName = f.name;
                 this.commands.set(cmd.name, cmd);
-
+                
                 if (cmd) {
                     data.push({
                         name: cmd.name,

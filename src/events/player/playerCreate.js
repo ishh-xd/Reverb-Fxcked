@@ -20,10 +20,5 @@ module.exports = class PlayerCreate extends Event {
 
     player.setVolume(80)
 
-    let hook = new WebhookClient({ url: this.client.config.hooks.lavalink.url });
-    const embed12 = new EmbedBuilder()
-      .setColor("#ff0080")
-      .setDescription(`Player created with node **${player.node.name}** in ${guild.name} | ${guild.id}`)
-    if (hook) await hook.send({ embeds: [embed12] }).catch(() => { });
   }
 }

@@ -31,18 +31,10 @@ module.exports = class playerStart extends Event {
 
     if (data2 && data2.prunning) {
 
-      const m = await channel.send({ embeds: [new EmbedBuilder().setColor(color).setDescription(`Now playing [${track.title}](${track.uri}) ~ [${track.requester}]`)] });
+      const m = await channel.send({ embeds: [new EmbedBuilder().setColor(color).setDescription(`Now playing [${track.title}](${track.uri}) requested by [${track.requester}]`)] });
 
       return await player.setNowplayingMessage(m);
     };
-
-    const web1 = new WebhookClient({ url: "https://discord.com/api/webhooks/996717129963425812/H1FfpOz7r0P7pwRPACKq-stKR5djMFj5qZJwrOyqjAh1r8h4j8oDbOoK4wGYolz9WT8d" });
-    const embed11 = new EmbedBuilder()
-
-      .setColor("#ff0080")
-      .setDescription(`ID: **${guild?.id}**\nServer: **${guild.name ? guild.name : 'unknown'}**\nNow playing: **[${track.title}](${track.uri})**`)
-
-    web1.send({ embeds: [embed11] })
 
     if (data && data.channel) {
       let guildId = this.client.guilds.cache.get(data._id)
@@ -57,12 +49,12 @@ module.exports = class playerStart extends Event {
 
           if (data2.prunning) {
             let me1;
-            if (channel && channel.sendable && channel.id !== textChannel.id) me1 = await channel.send({ embeds: [new EmbedBuilder().setColor(color).setDescription(`Now playing [${track.title}](${track.uri}) ~ [${track.requester}]`)] });
+            if (channel && channel.sendable && channel.id !== textChannel.id) me1 = await channel.send({ embeds: [new EmbedBuilder().setColor(color).setDescription(`Now playing [${track.title}](${track.uri}) reqeusted by [${track.requester}]`)] });
 
 
             if (me1) await player.setNowplayingMessage(me1);
           } else {
-            if (channel && channel.id !== textChannel.id && channel.sendable) await channel.send({ embeds: [new EmbedBuilder().setColor(color).setDescription(`Now playing [${track.title}](${track.uri}) ~ [${track.requester}]`)] }).catch(() => { });
+            if (channel && channel.id !== textChannel.id && channel.sendable) await channel.send({ embeds: [new EmbedBuilder().setColor(color).setDescription(`Now playing [${track.title}](${track.uri}) requested by [${track.requester}]`)] }).catch(() => { });
           };
         };
 
@@ -103,13 +95,7 @@ module.exports = class playerStart extends Event {
             .setStyle(2)
             .setEmoji(this.client.config.bemoji.volup));
 
-            const buttonRow2 = new ActionRowBuilder()
-            .addComponents(
-              new ButtonBuilder()
-                .setCustomId('FAVORITE_BUTTON')
-                .setStyle(2)
-                .setLabel("Make It Favorite")
-            );
+            
 
       try {
         const missingPerms = missingPermissions([PermissionsBitField.Flags.SendMessages, PermissionsBitField.Flags.EmbedLinks, PermissionsBitField.Flags.ManageMessages], channel, guild.members.me);
@@ -154,7 +140,7 @@ module.exports = class playerStart extends Event {
           .setColor(color)
           .setDescription(`Now playing [${track.title}](${track.uri}) by ${await player.getArtist(this.client, track)}`)
           .setURL(track.uri)
-        let ms = await channel.send({ embeds: [Embed], components: [buttonRow, buttonRow2] });
+        let ms = await channel.send({ embeds: [Embed], components: [buttonRow] });
         await player.setNowplayingMessage(ms);
       } catch (e) { 
         this.client.logger.error(e)

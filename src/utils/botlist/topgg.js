@@ -10,8 +10,8 @@ module.exports = async (client, totalGuilds, totalMem, shardCount) => {
         await axios.post(
             'https://top.gg/api/bots/910042269657231432/stats',
             JSON.stringify({
-                'server_count': '972534',
-                'shard_count': '742',
+                'server_count': totalGuilds.toString(),
+                'shard_count': shardCount.toString(),
             }),
             {
                 method: 'POST',

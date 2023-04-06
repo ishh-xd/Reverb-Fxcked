@@ -54,10 +54,9 @@ module.exports = class News extends Command {
           .setColor(client.config.color)
           .setDescription(`**Annoucement**
 
-<:smallcircle:984738535900844042> Reverb  surpassed 6000 servers
-<:smallcircle:984738535900844042> Reverb only supports **Spotify** and **SoundCloud** as a streaming platform (YouTube links or video titles won't work anymore)
+<:smallcircle:984738535900844042> Reverb surpassed 10000 servers
 
-**Author** : LMG XENON#0001\n**Time published**: 10:40 AM Monday, October 13, 2022 (GMT+1)`);
+**Author** : LMG XENON#0001\n**Time published**: 10:40 AM Saturday, April 8, 2023 (GMT+1)`);
         return await interaction.editReply({ embeds: [editEmbed], components: [new ActionRowBuilder().addComponents(but1, but2)] })
       }
       if (b.customId === "changelog") {
@@ -66,16 +65,14 @@ module.exports = class News extends Command {
 
 <:smallcircle:984738535900844042> New features 
 
-- Completely removed YouTube support from the player
-- Revamped UI
-- Added a DJ system
-- Added a announcing system
-- Add the fixvoice command
-- Added more filters
+- New Logo
+- Added high-end audio servers
+- Stabalized the bot
+- Added the botchannel command
+- Added a Premium system
 - Better response/ping
-- Added clusters
 
-**Author** : LMG XENON#0001\n**Time published**: 10:40 AM Monday, October 13, 2022 (GMT+1)`);
+**Author** : LMG XENON#0001\n**Time published**: 10:40 AM Saturday, April 8, 2023 (GMT+1)`);
         return await interaction.editReply({ embeds: [editEmbed2], components: [new ActionRowBuilder().addComponents(but1, but2)] })
       }
 

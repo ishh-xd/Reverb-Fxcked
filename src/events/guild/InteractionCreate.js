@@ -7,6 +7,7 @@ const Playlist = require("../../schemas/playlists");
 const missingPermissions = require('../../utils/missingPermissions');
 const { intCheck } = require("../../handlers/functions");
 const textchannel = require("../../schemas/guilds")
+const pdata = require("../../schemas/premium")
 
 module.exports = class InteractionCreate extends Event {
   constructor(...args) {
@@ -18,6 +19,8 @@ module.exports = class InteractionCreate extends Event {
    */
   async run(interaction, client) {
     let color = this.client.config.color ? this.client.config.color : "#ff0080"
+
+    const PUser = await pdata.findOne({ _id: interaction.user.id });
 
     let data = await db.findOne({ _id: interaction.guildId });
     if (interaction.isButton()) {
@@ -85,13 +88,6 @@ module.exports = class InteractionCreate extends Event {
       if (!cmd) return;
       const command = cmd.name.toLowerCase();
       this.client.logger.cmd('%s used by %s from %s', command, interaction.user.id, interaction.guildId);
-      let hook = new WebhookClient({ url: this.client.config.hooks.cmd.url });
-      if (!hook) return;
-      const embed11 = new EmbedBuilder()
-        .setColor("#ff0080")
-        .setDescription(`${command} used by **${interaction.user.tag}** in **${interaction.guild?.name}**`)
-      if (!hook) return;
-      if (hook) await hook.send({ embeds: [embed11] }).catch(() => { });
       if (!interaction.inGuild() || !interaction.channel.permissionsFor(interaction.guild.members.me).has(PermissionFlagsBits.ViewChannel)) return;
       if (data) {
         if (data.channel === interaction.channelId) {
@@ -126,17 +122,33 @@ module.exports = class InteractionCreate extends Event {
 
         }
       }
-      if (cmd.voteReq) {
-        const topgg = new Topgg.Api(this.client.config.botlist.token.topgg);
-        let voted = await topgg.hasVoted(interaction.user.id);
-        if (!voted && !this.client.config.devs.includes(interaction.user.id)) {
-          if (interaction.replied) {
-            return await interaction.editReply({ embeds: [new EmbedBuilder().setColor(color).setDescription(`You must vote me on [Top.gg](${this.client.config.botlist.topgg}) to use this command.`)], components: [new ActionRowBuilder().addComponents(this.client.button().setLabel("Vote").setStyle(5).setURL(this.client.config.botlist.topgg))] }).catch(() => { });
-          } else {
-            return await interaction.reply({ embeds: [new EmbedBuilder().setColor(color).setDescription(`You must vote me on [Top.gg](${this.client.config.botlist.topgg}) to use this command.`)], components: [new ActionRowBuilder().addComponents(this.client.button().setLabel("Vote").setStyle(5).setURL(this.client.config.botlist.topgg))] }).catch(() => { });
+
+      /* Premium Only
+      if (cmd.PremiumOnly) {
+        if (!PUser) {
+    
+            if (interaction.replied) {
+            return await interaction.editReply({ embeds: [new EmbedBuilder().setColor(color).setDescription(`You must vote me on [Top.gg](${this.client.config.botlist.topgg}) to use this command, or you can purchase premium to override all command restrictions`)], components: [new ActionRowBuilder().addComponents(this.client.button().setLabel("Vote").setStyle(5).setURL(this.client.config.botlist.topgg))] }).catch(() => { });
+            } else {
+              return await interaction.reply({ embeds: [new EmbedBuilder().setColor(color).setDescription(`You must vote me on [Top.gg](${this.client.config.botlist.topgg}) to use this command, or you can purchase premium to override all command restrictions`)], components: [new ActionRowBuilder().addComponents(this.client.button().setLabel("Vote").setStyle(5).setURL(this.client.config.botlist.topgg))] }).catch(() => { });
+            }
           }
         }
+      }
+      */
 
+      if (cmd.voteReq) {
+        if (!PUser) {
+          const topgg = new Topgg.Api(this.client.config.botlist.token.topgg);
+          let voted = await topgg.hasVoted(interaction.user.id);
+          if (!voted && !this.client.config.devs.includes(interaction.user.id)) {
+            if (interaction.replied) {
+              return await interaction.editReply({ embeds: [new EmbedBuilder().setColor(color).setDescription(`You must vote me on [Top.gg](${this.client.config.botlist.topgg}) to use this command, or you can purchase premium to override all command restrictions`)], components: [new ActionRowBuilder().addComponents(this.client.button().setLabel("Vote").setStyle(5).setURL(this.client.config.botlist.topgg))] }).catch(() => { });
+            } else {
+              return await interaction.reply({ embeds: [new EmbedBuilder().setColor(color).setDescription(`You must vote me on [Top.gg](${this.client.config.botlist.topgg}) to use this command, or you can purchase premium to override all command restrictions`)], components: [new ActionRowBuilder().addComponents(this.client.button().setLabel("Vote").setStyle(5).setURL(this.client.config.botlist.topgg))] }).catch(() => { });
+            }
+          }
+        }
       };
 
 
@@ -205,7 +217,6 @@ module.exports = class InteractionCreate extends Event {
       };
 
 
-
       if (!this.client.config.devs.includes(interaction.user.id)) {
         if (!this.client.cooldowns.has(commandName)) {
           this.client.cooldowns.set(commandName, new Collection());
@@ -241,5 +252,5 @@ module.exports = class InteractionCreate extends Event {
     };
 
   }
-}
 
+}

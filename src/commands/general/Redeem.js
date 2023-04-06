@@ -9,7 +9,7 @@ module.exports = class Redeem extends Command {
       super(client, {
         name: 'redeem',
         description: {
-          content: "Redeems a code to secure a premium guild.",
+          content: "Redeems a premiun code.",
           usage: 'redeem',
           examples: ['redeem']
         },
@@ -37,8 +37,8 @@ module.exports = class Redeem extends Command {
       });
     }
     async run (client, interaction, args) {
-      let code = args[0]
-        let user = await User.findOne({_id: interaction.guildId});
+      let code = interaction.options.getString("code");
+        let user = await User.findOne({_id: interaction.user.id});
         if (!code)
         return interaction.reply({
             embeds: [
@@ -69,7 +69,7 @@ module.exports = class Redeem extends Command {
             time = time.join("");
         
         user.isPremium = true
-        user.redeemedBy = interaction.author.id
+        user.redeemedBy = interaction.user.id
         user.redeemedAt = Date.now()
         user.plan = Pcode.plan,
         user.expireAt = user.expireTime,
@@ -82,7 +82,7 @@ module.exports = class Redeem extends Command {
         .setDescription(
             `${client.config.emojis.success} You have successfully redeemed premium!
 
-            Redeemed by - <@${interaction.author.id}>
+            Redeemed by - <@${interaction.user.id}>
             Plan - ${Pcode.plan}
             Expires at: <t:${time}>(<t:${time}:R>)`)
         .setColor(`#ff0080`)
@@ -98,9 +98,9 @@ module.exports = class Redeem extends Command {
                 time = time.join("");
 
             await User.create({
-                _id: interaction.guildId,
+                _id: interaction.user.id,
                 isPremium: true,
-                redeemedBy : interaction.author.id,
+                redeemedBy : interaction.user.id,
                 redeemedAt : Date.now(),
                 plan: Pcode.plan,
                 expireAt : Pcode.expireTime,
@@ -111,7 +111,7 @@ module.exports = class Redeem extends Command {
             .setDescription(
                 `${client.config.emojis.success} You have successfully redeemed premium!
 
-                Redeemed By - <@${interaction.author.id}>
+                Redeemed By - <@${interaction.user.id}>
                 Plan - ${Pcode.plan}
                 Expires at: <t:${time}>(<t:${time}:R>)`)
             .setColor(`#ff0080`)

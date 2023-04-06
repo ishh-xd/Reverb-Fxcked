@@ -7,7 +7,7 @@ module.exports = class Profile extends Command {
       name: 'profile',
       description: {
         content: "Shows the profile of a user.",
-        usage: 'profile',
+        usage: 'profile', 
         examples: ['profile']
       },
       category: 'info',

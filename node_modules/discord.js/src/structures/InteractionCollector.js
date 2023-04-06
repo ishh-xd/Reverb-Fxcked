@@ -14,7 +14,7 @@ const Events = require('../util/Events');
  * @property {number} [maxComponents] The maximum number of components to collect
  * @property {number} [maxUsers] The maximum number of users to interact
  * @property {Message|APIMessage} [message] The message to listen to interactions from
- * @property {InteractionResponse} interactionResponse The interaction response to listen
+ * @property {InteractionResponse} [interactionResponse] The interaction response to listen
  * to message component interactions from
  */
 
@@ -147,10 +147,17 @@ class InteractionCollector extends Collector {
      * @event InteractionCollector#collect
      * @param {BaseInteraction} interaction The interaction that was collected
      */
+
     if (this.interactionType && interaction.type !== this.interactionType) return null;
     if (this.componentType && interaction.componentType !== this.componentType) return null;
     if (this.messageId && interaction.message?.id !== this.messageId) return null;
-    if (this.messageInteractionId && interaction.message?.interaction?.id !== this.messageInteractionId) return null;
+    if (
+      this.messageInteractionId &&
+      interaction.message?.interaction?.id &&
+      interaction.message.interaction.id !== this.messageInteractionId
+    ) {
+      return null;
+    }
     if (this.channelId && interaction.channelId !== this.channelId) return null;
     if (this.guildId && interaction.guildId !== this.guildId) return null;
 

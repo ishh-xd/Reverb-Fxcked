@@ -12,7 +12,7 @@ module.exports = class MessageCreate extends Event {
      * @param {Message} message 
      * @returns 
      */
-    async run(message) {
+    async run(message, client) {
         if (message.author.bot || message.channel.type === ChannelType.DM) return;
         let guildData = await textchannel.findOne({ _id: message.guildId });
         if(!guildData) guildData = new textchannel({
@@ -35,6 +35,7 @@ module.exports = class MessageCreate extends Event {
                     await message.reply({ embeds: [embed], components: [new ActionRowBuilder().addComponents(this.client.button().setLabel("Support Server").setStyle(5).setURL(this.client.config.links.server))] }).catch(() => { });
                 };
             };
+        
             const escapeRegex = (str) => str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
             const prefixRegex = new RegExp(`^(<@!?${this.client.user.id}>|${escapeRegex(prefix)})\\s*`);
             if (!prefixRegex.test(message.content)) return;

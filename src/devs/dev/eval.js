@@ -1,10 +1,10 @@
 const Command = require('../../structures/Command')
 
 module.exports = class EvalCommand extends Command {
-    constructor(client) {
+  constructor(client) {
         super(client, {
             name: 'eval',
-            description: {
+            descripdescriptiontion: {
                 content: 'To check the bot\'s latency.',
                 usage: 'ping',
                 examples: ['ping'],

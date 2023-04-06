@@ -68,6 +68,11 @@ module.exports = class Info extends Command {
               inline: true
             },
             {
+              name: "Hosted on",
+              value: `[GalaxicHost](https://discord.gg/DgmEWeXk)`,
+              inline: false
+            },
+            {
               name: "Developer(s)",
               value: `[LMG XENON](https://discord.com/users/${client.config.devs[0]}) & [Rtxeon](https://discord.com/users/${client.config.devs[1]})`,
               inline: false

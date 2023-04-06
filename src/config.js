@@ -1,19 +1,19 @@
 module.exports = {
   token: "OTYzODQ2MzgxNDEwMzI0NTEw.GmXFGm.MQdgrkKTf2sFL4T-ZdhKMJQvQ6CcjFXTAkov60",
   clientId: "963846381410324510",
-   clientSecret: "rVEjAo4Hw-8n9ukiT6DDxXn-YTNkDH7I",
+   clientSecret: "GsGpztshR5DnlSOAynTJCe8MCZU-wQHu",
   Scopes: ["identify", "guilds"],
   CookieSecret: "PlayerOP", //anythiing you want
   CallbackURL: "/api/callback", //Discord API Callback url. Do not touch it if you don't know what you are doing. All you need to change for website to work is on line 20.
   Dashboard: true, //If you wanted to make the website run or not, default is true
-  Port: 25565, //Which port website gonna be hosted
-  Website: process.env.Website || "https://reverbmusic.live",
+  Port: 3000, //Which port website gonna be hosted
+  Website: process.env.Website || "localhost:3000",
   devs: [
     "931645484920107088",
     "990643162928279592",
-    "797438292139180035"
+    "1041881720380727377"
   ],
-  mongodb: "mongodb+srv://insane:op1@cluster0.4eqsq.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
+  mongodb: "mongodb+srv://insane:op5@cluster0.5qyw6.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
   color: "#ff0080",
   prefix: "r!",
   statcord: "statcord.com-Ldavt8ONUAig6GUZtcMm",
@@ -22,6 +22,18 @@ module.exports = {
       url: "hatkidll.gremagol.xyz:2334",
       auth: "easypass",
       name: "Reverb",
+      secure: false
+    },
+    {
+      url: "134.122.6.112:3192",
+      auth: "awesomelunox",
+      name: "Reverb 2",
+      secure: false
+    },
+    {
+      url: "lavalink.hyembot.site:80",
+      auth: "kendoxhyem",
+      name: "Reverb 3",
       secure: false
     },
   ],
@@ -113,7 +125,7 @@ module.exports = {
     channel: {
       topic: "🔉 To decrease 10% volume.\n⏮️ To play the previously played song.\n⏯️ To pause/resume the song.\n⏭️ To skip the song.\n🔊 To increase 10% volume.\n⏪ To rewind 10s seconds.\n♾️To enable/disable autoplay.\n⏹️ To stops/destroy the player.\n🔁 Tp switch between the loop modes (track/queue/shuffle).\n⏩ To forward 10 seconds.",
     }
-  },
+  },  
   hooks: {
     cmd: {
       url: "https://discord.com/api/webhooks/997884236159795301/fJ-quVDWLlUdBlo8DEHkUd6Bk87El9388eU1MEq2yQfMc3nsS5LRh1oguFwPQZENhMT8"
